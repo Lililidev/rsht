@@ -35,11 +35,11 @@ class ErrorBoundary extends Component<Props, State> {
           severity="error"
           action={
             <Button color="inherit" onClick={this.handleReset}>
-              Попробуй ещё
+              Try Again
             </Button>
           }
         >
-          Что-то пошло не так: {this.state.error?.message}
+          Something went wrong: {this.state.error?.message}
         </Alert>
       );
     }

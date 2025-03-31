@@ -23,7 +23,7 @@ export default function ErrorPage() {
       </Typography>
       {error?.status && (
         <Typography variant="body1" color="textSecondary" gutterBottom>
-          Error: {error.status}
+          Error code: {error.status}
         </Typography>
       )}
       <Button 

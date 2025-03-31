@@ -7,7 +7,7 @@ const Layout: React.FC = () => {
   return (
     <>
       <CssBaseline />
-      <Container className={styles.container}>
+      <Container maxWidth="lg" className={styles.container}>
         <Outlet />
       </Container>
     </>
