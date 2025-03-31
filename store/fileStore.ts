@@ -1,0 +1,98 @@
+import { create } from 'zustand';
+import { FileEntry, ApiError } from '@/types/fileTypes';
+import { Item } from '@/utils/item';
+
+const hardcodedFiles: FileEntry[] = [
+  { id: 1, type: 'dir', parentId: null, name: 'Ваши файлы', isFavorite: false },
+  { id: 2, type: 'dir', parentId: 1, name: 'second', isFavorite: false },
+  { id: 3, type: 'dir', parentId: 1, name: 'test', isFavorite: true },
+  { id: 4, type: 'dir', parentId: 1, name: 'third', isFavorite: false },
+  { id: 5, type: 'file', parentId: 1, name: 'photo.jpg', isFavorite: true },
+  { id: 6, type: 'dir', parentId: 2, name: 'Вложенная папка', isFavorite: false },
+  { id: 7, type: 'dir', parentId: 6, name: 'Глубокое вложение', isFavorite: false },
+];
+
+interface FileStoreState {
+  files: Item[];
+  currentFolderId: number | null;
+  isLoading: boolean;
+  error: ApiError | null;
+  fetchFiles: () => Promise<void>;
+  setCurrentFolder: (id: number | null) => void;
+  getCurrentFolderFiles: () => Item[];
+  getFolderPath: (id: number) => Item[];
+}
+
+export const useFileStore = create<FileStoreState>((set, get) => ({
+  files: [],
+  currentFolderId: null,
+  isLoading: false,
+  error: null,
+
+  fetchFiles: async () => {
+    set({ isLoading: true, error: null });
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      const items = Item.buildTree(hardcodedFiles);
+      set({ files: items, isLoading: false });
+    } catch (error) {
+      const apiError: ApiError = {
+        message: error instanceof Error ? error.message : 'Failed to load files',
+        status: 500,
+        timestamp: new Date().toISOString(),
+      };
+      set({ error: apiError, isLoading: false });
+    }
+  },
+
+  setCurrentFolder: (id) => {
+    try {
+      set({ currentFolderId: id });
+    } catch (error) {
+      console.error('Folder navigation error:', error);
+    }
+  },
+
+  getCurrentFolderFiles: () => {
+    try {
+      const { files, currentFolderId } = get();
+      if (currentFolderId === null) return files.filter((file) => file.parentId === null);
+      const folder = findItemById(files, currentFolderId);
+      return folder?.children || [];
+    } catch (error) {
+      console.error('Get files error:', error);
+      return [];
+    }
+  },
+
+  getFolderPath: (id) => {
+    try {
+      const { files } = get();
+      const path: Item[] = [];
+      let currentId: number | null = id;
+
+      while (currentId !== null) {
+        const item = findItemById(files, currentId);
+        if (item) {
+          path.unshift(item);
+          currentId = item.parentId;
+        } else {
+          currentId = null;
+        }
+      }
+      return path;
+    } catch (error) {
+      console.error('Get path error:', error);
+      return [];
+    }
+  },
+}));
+function findItemById(items: Item[], id: number): Item | undefined {
+  for (const item of items) {
+    if (item.id === id) return item;
+    if (item.children) {
+      const found = findItemById(item.children, id);
+      if (found) return found;
+    }
+  }
+}
