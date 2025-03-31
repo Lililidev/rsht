@@ -8,7 +8,17 @@ interface LikeButtonProps {
 }
 
 export const LikeButton: React.FC<LikeButtonProps> = ({ isFavorite, onClick }) => (
-  <IconButton onClick={onClick} edge="end" aria-label={isFavorite ? 'Unlike' : 'Like'}>
-    {isFavorite ? <StarFilledIcon color="primary" /> : <StarOutlineIcon />}
+  <IconButton
+    onClick={onClick}
+    edge="end"
+    aria-label={isFavorite ? 'Unlike' : 'Like'}
+    sx={{
+      color: isFavorite ? '#ffb74d' : '#5f6368',
+      '& .MuiSvgIcon-root': {
+        color: 'inherit',
+      },
+    }}
+  >
+    {isFavorite ? <StarFilledIcon /> : <StarOutlineIcon />}
   </IconButton>
 );
