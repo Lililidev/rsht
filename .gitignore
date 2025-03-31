@@ -20,6 +20,11 @@ dist-ssr/
 # IDE
 .vscode/
 .idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
 # System
 .DS_Store
