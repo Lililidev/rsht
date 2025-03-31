@@ -2,14 +2,28 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useFileStore } from '@/store/fileStore';
 import FileItem from '@/components/FileItem/FileItem';
-import { List, Typography, CircularProgress, Breadcrumbs, Link } from '@mui/material';
+import { 
+  List, 
+  Typography, 
+  CircularProgress, 
+  Breadcrumbs, 
+  Link
+} from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
+import ErrorPage from '@/components/ErrorPage/ErrorPage';
+import styles from './FileList.module.css';
 
 export default function FileList() {
   const { folderId } = useParams();
-  const { fetchFiles, getCurrentFolderFiles, setCurrentFolder, getFolderPath } =
-    useFileStore();
+  const {
+    isLoading,
+    error,
+    fetchFiles,
+    getCurrentFolderFiles,
+    setCurrentFolder,
+    getFolderPath
+  } = useFileStore();
 
   useEffect(() => {
     fetchFiles().then(() => {
@@ -17,27 +31,34 @@ export default function FileList() {
     });
   }, [fetchFiles, folderId, setCurrentFolder]);
 
+  if (error) return <ErrorPage />;
+  if (isLoading) return <CircularProgress className={styles.loading} />;
+
   const currentFiles = getCurrentFolderFiles();
   const folderPath = folderId ? getFolderPath(parseInt(folderId)) : [];
 
   return (
-    <div className="file-list">
-      <Breadcrumbs className="breadcrumbs">
+    <div className={styles.container}>
+      <Breadcrumbs className={styles.breadcrumbs}>
         <Link component={RouterLink} to="/">
           <HomeIcon fontSize="small" />
         </Link>
-        {folderPath.map((folder) => (
-          <Link key={folder.id} component={RouterLink} to={`/folder/${folder.id}`}>
+        {folderPath.map(folder => (
+          <Link
+            key={folder.id}
+            component={RouterLink}
+            to={`/folder/${folder.id}`}
+          >
             {folder.name}
           </Link>
         ))}
       </Breadcrumbs>
 
       {currentFiles.length === 0 ? (
-        <Typography variant="body1">Папка пуста</Typography>
+        <Typography className={styles.empty}>Папка пуста</Typography>
       ) : (
         <List>
-          {currentFiles.map((file) => (
+          {currentFiles.map(file => (
             <FileItem key={file.id} item={file} />
           ))}
         </List>
