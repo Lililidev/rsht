@@ -64,7 +64,7 @@ export const useFileStore = create<FileStoreState>((set, get) => ({
           }
         }, 200);
       });
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       const apiError: ApiError = {
         message: 'Failed to toggle favorite',
