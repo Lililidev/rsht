@@ -1,54 +1,84 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Руководство пользователя
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+### Просмотр файлов и папок
+- ![alt text](image.png) Папки отображаются в виде папки
+- ![alt text](image-1.png) Файлы отображаются в виде документа
+- ![alt text](image-2.png) Синяя звездочка указывает на избранные элементы
+- ![alt text](image-3.png) Пустая звездочка - элемент не в избранном
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Навигация
+1. Кликните по папке, чтобы открыть её содержимое
+2. Используйте хлебные крошки для быстрой навигации
+3. Нажмите на дом чтобы вернуться в корневую папку
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### Работа с избранным
+- Нажмите ✩ чтобы добавить в избранное
+- Нажмите ★ чтобы убрать из избранного
+- Избранные элементы сохраняются между сеансами
+
+## Установка и запуск проекта
+
+### Предварительные требования
+- Node.js версии 18+
+- npm/yarn/pnpm
+- Git (для клонирования репозитория)
+
+### 1. Клонирование репозитория
+```bash
+git clone <URL-вашего-репозитория>
+cd rsht_file_system
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+### 2. Установка зависимостей
+```bash
+npm install
+# или
+yarn install
+# или
+pnpm install
 ```
+
+### 3. Запуск в режиме разработки
+```bash
+npm run dev
+# или
+yarn dev
+# или
+pnpm dev
+```
+
+После запуска приложение будет доступно по адресу:
+`http://localhost:5173` (или другому порту, который укажет Vite)
+
+### 4. Сборка для production
+```bash
+npm run build
+# или
+yarn build
+# или
+pnpm build
+```
+
+## Структура проекта
+- `src/` - исходный код приложения
+- `public/` - статические файлы
+- `dist/` - собранная версия (после build)
+- `node_modules/` - зависимости
+
+## Технологии
+- React 19
+- TypeScript
+- Material UI (MUI)
+- Zustand (управление состоянием)
+- React Router (навигация)
+- Vite (сборка)
+
+## Поддержка
+При возникновении проблем:
+1. Проверьте версию Node.js (`node -v`)
+2. Убедитесь, что все зависимости установлены
+3. Проверьте консоль браузера и терминала на наличие ошибок
+4. При необходимости создайте issue в репозитории проекта
