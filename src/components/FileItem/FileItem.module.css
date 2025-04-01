@@ -1,0 +1,13 @@
+.listItem {
+  position: relative;
+  padding: 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.listItem:last-child {
+  border-bottom: none;
+}
+
+.listItem:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
