@@ -1,3 +1,5 @@
+import { FileEntry } from '@/types/fileTypes';
+
 const mockFiles: FileEntry[] = [
   { id: 1, type: 'dir', parentId: null, name: 'Ваши файлы', isFavorite: false },
   { id: 2, type: 'dir', parentId: 1, name: 'second', isFavorite: false },
