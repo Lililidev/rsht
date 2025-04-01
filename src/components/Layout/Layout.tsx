@@ -1,17 +1,23 @@
+import React from 'react';
 import { Container } from '@mui/material';
-import { Outlet } from 'react-router-dom';
 
-export default function Layout() {
+interface LayoutProps {
+  children: React.ReactNode;
+}
+
+const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <Container 
-      maxWidth="lg" 
-      sx={{ 
+    <Container
+      maxWidth="lg"
+      sx={{
         padding: '20px',
         minHeight: '100vh',
         backgroundColor: '#ffffff',
       }}
     >
-      <Outlet />
+      {children}
     </Container>
   );
-}
+};
+
+export default Layout;
