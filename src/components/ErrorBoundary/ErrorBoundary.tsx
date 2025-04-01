@@ -4,6 +4,7 @@ import { useFileStore } from '@/store/fileStore';
 
 interface Props {
   children: ReactNode;
+  fallback?: ReactNode;
 }
 
 interface State {
@@ -31,19 +32,13 @@ class ErrorBoundary extends Component<Props, State> {
   render() {
     if (this.state.hasError) {
       return (
-        <Alert
-          severity="error"
-          action={
-            <Button color="inherit" onClick={this.handleReset}>
-              Try Again
-            </Button>
-          }
-        >
-          Something went wrong: {this.state.error?.message}
-        </Alert>
+        this.props.fallback || (
+          <Alert severity="error" action={<Button onClick={this.handleReset}>Try Again</Button>}>
+            {this.state.error?.message}
+          </Alert>
+        )
       );
     }
-
     return this.props.children;
   }
 }

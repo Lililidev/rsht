@@ -16,7 +16,14 @@ export default function App() {
         <BrowserRouter>
           <Layout>
             <Routes>
-              <Route path="/" element={<FileList />} />
+              <Route
+                path="/"
+                element={
+                  <ErrorBoundary fallback={<ErrorPage />}>
+                    <FileList />
+                  </ErrorBoundary>
+                }
+              />
               <Route path="/folder/:folderId" element={<FileList />} />
               <Route path="/error" element={<ErrorPage />} />
             </Routes>
